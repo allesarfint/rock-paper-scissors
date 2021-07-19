@@ -1,0 +1,23 @@
+main {
+    max-width: 720px;
+    margin: auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.option {
+    cursor: pointer;
+}
+
+.winner {
+    background-color: green;
+}
+
+.loser {
+    background-color: red;
+}
+
+.draw {
+    background-color: yellow;
+}
