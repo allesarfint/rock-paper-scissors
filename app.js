@@ -1,137 +1,146 @@
 /*
-        Problem: Make a rock paper scissors game which receives input from
-        the player, compares it to a randomly generated input from the
-        computer, stores data from five rounds and determiners the winner
-        based on which won more games, either the player or the computer.
-        
-        Plan: 
-            -User interface: Web based interface
-            -Data inputs: User selects from the webpage between rock, paper
-            or scissor. Random selection from computer
-            -Desired Outputs: A text announces each round winner and shows
-            how many rounds each players have won. After five rounds display
-            the winner and give the option to play again.
-        */
+Problem: Make a rock paper scissors game which receives input from
+the player, compares it to a randomly generated input from the
+computer, stores data from five rounds and determiners the winner
+based on which won more games, either the player or the computer.
 
+Plan:
+    -User interface: Web based interface
+    -Data inputs: User selects from the webpage between rock, paper
+    or scissor. Random selection from computer
+    -Desired Outputs: A text announces each round winner and shows
+    how many rounds each players have won. After five rounds display
+    the winner and give the option to play again.
+*/
 
-        //Variable declaration string playerInput
-        let playerInput = "";
+let playerSelection = "",
+    cpuSelection = "",
+    playerWins = 0,
+    cpuWins = 0;
 
-        //Variable declaration string computerInput
-        let computerInput = "";
+const playerScore = document.querySelector("#player-score");
+const cpuScore = document.querySelector("#cpu-score");
 
-        //Variable declaration number playerWins
-        let playerWins = 0;
+const playerPlay = document.querySelector("#player-play");
+const cpuPlay = document.querySelector("#cpu-play");
 
-        //Variable declaration number computerWins
-        let computerWins = 0;
+const scoreBoard = document.querySelector("#score-board");
 
-        //Variable declaration number numberOfGames
-        let numberOfGames = 0;
+const options = document.querySelectorAll(".option");
 
-        //Ask the player to input an option and validate it
-        function playerSelection() {
-            playerInput = prompt("Input your play: rock, paper or scissor");
-            console.log(playerInput);
-            return playerInput
+const reset = document.querySelector("#reset");
+
+reset.addEventListener("click", function resetGame() {
+    playerWins = 0;
+    cpuWins = 0;
+    playerPlay.textContent = "";
+    cpuPlay.textContent = "";
+    scoreBoard.innerHTML = `
+        <div id="player-score" class="score">
+            PLAYER - 0
+        </div>
+        <div id="cpu-score" class="score">
+            CPU - 0
+        </div>`;
+})
+
+options.forEach(option => option.addEventListener("click", function getPlayerSelection(e) {
+    return playerSelection = e.target.id
+}))
+
+options.forEach(option => option.addEventListener("click", () => {
+    if (playerWins === 3 || cpuWins === 3) return
+    cpuPlay.classList.remove("winner", "loser", "draw");
+    playerPlay.classList.remove("winner", "loser", "draw");
+    validateUserSelection();
+    generateCpuSelection();
+    selectRoundWinner();
+    getGameWinner();
+}))
+
+function validateUserSelection() {
+    if (playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors") {return}
+    else {
+        alert("Invalid input.");
+        return false
+    }
+}
+
+function generateCpuSelection() {
+    const cpuOptions = ["rock", "paper", "scissors"];
+    return cpuSelection = cpuOptions[Math.floor(Math.random() * cpuOptions.length)]
+}
+
+function selectRoundWinner() {
+    if(playerSelection === "rock") {        
+        playerPlay.textContent = "✊";
+        if (cpuSelection === "paper") {
+            cpuPlay.textContent = "✋";
+            cpuPlay.classList.add("winner");
+            playerPlay.classList.add("loser");
+            ++cpuWins;
+            cpuScore.textContent = `CPU - ${cpuWins}`;
+        } else if (cpuSelection === "scissors") {
+            cpuPlay.textContent = "✌";
+            cpuPlay.classList.add("loser");
+            playerPlay.classList.add("winner");
+            ++playerWins;
+            playerScore.textContent = `PLAYER - ${playerWins}`;
+        } else {
+            cpuPlay.textContent = "✊";
+            cpuPlay.classList.add("draw");
+            playerPlay.classList.add("draw");
+            return
         }
-
-        //Make sure the playerInput is valid and lower case
-        function validatePlayerInput(input) {
-            if (typeof input === null || typeof input === "") {return numberOfGames = 5}
-            if (typeof input === "string") {
-                input = input.toLowerCase();
-                if (input === "rock" || input === "paper" || input === "scissors") {
-                    return playerInput = input
-                } else {
-                    alert('Incorrect selection, please enter only: rock, paper or scissors');
-                    return false;
-                }
-            } else {
-                alert('Incorrect selection, please enter only: rock, paper or scissors');
-                return false;
-            }
+    } else if(playerSelection === "paper") {
+        playerPlay.textContent = "✋";
+        if (cpuSelection === "scissors") {
+            cpuPlay.textContent = "✌";
+            cpuPlay.classList.add("winner");
+            playerPlay.classList.add("loser");
+            ++cpuWins;
+            cpuScore.textContent = `CPU - ${cpuWins}`;
+        } else if (cpuSelection === "rock") {
+            cpuPlay.textContent = "✊";
+            cpuPlay.classList.add("loser");
+            playerPlay.classList.add("winner");
+            ++playerWins;
+            playerScore.textContent = `PLAYER - ${playerWins}`;
+        } else {
+            cpuPlay.textContent = "✋";
+            cpuPlay.classList.add("draw");
+            playerPlay.classList.add("draw");
+            return
         }
-
-        //Randomly generate the computer input from an array
-        function computerPlay() {
-            const computerOptions = ["rock", "paper", "scissors"];
-            let randomSelection = computerOptions[Math.floor(Math.random() * computerOptions.length)]
-            return computerInput = randomSelection            
+    } else if(playerSelection === "scissors") {
+        playerPlay.textContent = "✌";
+        if (cpuSelection === "rock") {
+            cpuPlay.textContent = "✊";
+            cpuPlay.classList.add("winner");
+            playerPlay.classList.add("loser");
+            ++cpuWins;
+            cpuScore.textContent = `CPU - ${cpuWins}`;
+        } else if (cpuSelection === "paper") {
+            cpuPlay.textContent = "✋";
+            cpuPlay.classList.add("loser");
+            playerPlay.classList.add("winner");
+            ++playerWins;
+            playerScore.textContent = `PLAYER - ${playerWins}`;
+        } else {
+            cpuPlay.textContent = "✌";
+            cpuPlay.classList.add("draw");
+            playerPlay.classList.add("draw");
+            return
         }
+    }
+}
 
-        //Determine the winner of the round
-        //    if playerInput rock
-        //        computerInput rock = plus one to computer and player wins
-        //        computerInput paper = computerWins plus one
-        //        computerInput scissors = playerWins plus one
-        //    if playerInput paper
-        //        computerInput rock = playerWins plus one
-        //        computerInput paper = plus one to computer and player wins
-        //        computerInput scissors = computerWins plus one
-        //    if playerInput scissors
-        //        computerInput rock = computerWins plus one
-        //        computerInput paper = playerWins plus one
-        //        computerInput scissors = plus one to computer and player wins
-        function rockPaperScissorsRound (player, computer) {
-            if (player === "rock") {
-                if (computer === "rock") {
-                    alert("Draw, play again");
-                    return false                   
-                } else if (computer === "paper") {
-                    alert("Computer Wins");
-                    return ++computerWins
-                } else if (computer === "scissors") {
-                    alert("Player Wins");
-                    return ++playerWins
-                }
-            } else if (player === "paper") {
-                if (computer === "paper") {
-                    alert("Draw, play again");
-                    return false                                     
-                } else if (computer === "scissors") {
-                    alert("Computer Wins");
-                    return ++computerWins
-                } else if (computer === "rock") {
-                    alert("Player Wins");
-                    return ++playerWins
-                }
-            } else if (player === "scissors") {
-                if (computer === "scissors") {
-                    alert("Draw, play again");
-                    return false                                     
-                } else if (computer === "rock") {
-                    alert("Computer Wins");
-                    return ++computerWins
-                } else if (computer === "paper") {
-                    alert("Player Wins");
-                    return ++playerWins
-                }
-            }
-        }
+let winner = document.createElement("div").classList.add("score");
 
-        //Repeat five times
-        function playGame() {
-            if (validatePlayerInput(playerSelection()) === false) {
-                playGame();
-                return
-            }
-            computerPlay();
-            if (rockPaperScissorsRound(playerInput, computerInput) !== false) {
-                numberOfGames++;
-            };
-        }
-
-        function runGame () {
-            while (numberOfGames < 5) {
-                playGame()
-            }
-            numberOfGames = 0;
-            if (playerWins > computerWins) {
-                alert(`The Player wins with ${playerWins} rounds against ${computerWins}.`)
-            } else {
-                alert(`The Computer wins with ${computerWins} rounds against ${playerWins}.`)
-            }
-            playerWins = 0;
-            computerWins = 0;
-        }   
+function getGameWinner() {
+    if (playerWins === 3) {
+        scoreBoard.textContent = "Player WON";
+    } else if (cpuWins === 3) {
+        scoreBoard.textContent = "CPU WON";
+    }
+}
