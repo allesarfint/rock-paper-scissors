@@ -18,8 +18,8 @@ let playerSelection = "",
     playerWins = 0,
     cpuWins = 0;
 
-const playerScore = document.querySelector("#player-score");
-const cpuScore = document.querySelector("#cpu-score");
+let playerScore = document.querySelector("#player-score");
+let cpuScore = document.querySelector("#cpu-score");
 
 const playerPlay = document.querySelector("#player-play");
 const cpuPlay = document.querySelector("#cpu-play");
@@ -42,6 +42,8 @@ reset.addEventListener("click", function resetGame() {
         <div id="cpu-score" class="score">
             CPU - 0
         </div>`;
+    playerScore = document.querySelector("#player-score");
+    cpuScore = document.querySelector("#cpu-score");
 })
 
 options.forEach(option => option.addEventListener("click", function getPlayerSelection(e) {
@@ -134,8 +136,6 @@ function selectRoundWinner() {
         }
     }
 }
-
-let winner = document.createElement("div").classList.add("score");
 
 function getGameWinner() {
     if (playerWins === 3) {
