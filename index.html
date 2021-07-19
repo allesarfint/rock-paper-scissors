@@ -4,33 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet" type="text/css">
     <title>Rock Paper Scissors</title>
 </head>
 <body>
     <main>
-        <div id="score">
-            <div id="player-score">
-
+        <div id="score-board">
+            <div id="player-score" class="score">
+                PLAYER - 0
             </div>
-            <div id="cpu-score">
-
+            <div id="cpu-score" class="score">
+                CPU - 0
             </div>
         </div>
         <div id="playzone">
             <div id="game-area">
-                <div id="player-selection">
-
+                <div id="player-play" class="selection">
+                    
                 </div>
-                <div id="cpu-selection">
-
+                <div id="cpu-play" class="selection">
+                    
                 </div>
             </div>
             <div id="player-options">
-
+                <div id="rock" class="option">✊</div>
+                <div id="paper" class="option">✋</div>
+                <div id="scissors" class="option">✌</div>
             </div>
         </div>
         <div id="reset-option">
-            
+            <button id="reset">Reset</button>
         </div>
     </main>
     <script src="app.js"></script>
