@@ -83,6 +83,7 @@ main {
     border-radius: 10px;
     text-align: center;
     line-height: 70px;
+    user-select: none;
 }
 
 .option:hover {
