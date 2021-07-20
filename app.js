@@ -16,7 +16,8 @@ Plan:
 let playerSelection = "",
     cpuSelection = "",
     playerWins = 0,
-    cpuWins = 0;
+    cpuWins = 0,
+    requiredWins = 5;
 
 let playerScore = document.querySelector("#player-score");
 let cpuScore = document.querySelector("#cpu-score");
@@ -53,7 +54,7 @@ options.forEach(option => option.addEventListener("click", function getPlayerSel
 }))
 
 options.forEach(option => option.addEventListener("click", () => {
-    if (playerWins === 3 || cpuWins === 3) return
+    if (playerWins === requiredWins || cpuWins === requiredWins) return
     cpuPlay.classList.remove("winner", "loser", "draw");
     playerPlay.classList.remove("winner", "loser", "draw");
     validateUserSelection();
@@ -140,9 +141,9 @@ function selectRoundWinner() {
 }
 
 function getGameWinner() {
-    if (playerWins === 3) {
+    if (playerWins === requiredWins) {
         scoreBoard.textContent = "YOU WON!!";
-    } else if (cpuWins === 3) {
+    } else if (cpuWins === requiredWins) {
         scoreBoard.textContent = "YOU LOSS!!";
     }
 }
