@@ -34,7 +34,9 @@ reset.addEventListener("click", function resetGame() {
     playerWins = 0;
     cpuWins = 0;
     playerPlay.textContent = "";
+    playerPlay.classList.remove("winner", "loser", "draw")
     cpuPlay.textContent = "";
+    cpuPlay.classList.remove("winner", "loser", "draw")
     scoreBoard.innerHTML = `
         <div id="player-score" class="score">
             PLAYER - 0
@@ -139,8 +141,8 @@ function selectRoundWinner() {
 
 function getGameWinner() {
     if (playerWins === 3) {
-        scoreBoard.textContent = "Player WON";
+        scoreBoard.textContent = "YOU WON!!";
     } else if (cpuWins === 3) {
-        scoreBoard.textContent = "CPU WON";
+        scoreBoard.textContent = "YOU LOSS!!";
     }
 }
