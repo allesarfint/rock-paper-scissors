@@ -6,7 +6,6 @@ body {
 main {
     max-width: 620px;
     margin: auto;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     align-content: center;
